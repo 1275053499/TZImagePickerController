@@ -14,6 +14,7 @@
 #import "UIView+TZLayout.h"
 #import "TZImageManager.h"
 #import "TZVideoPlayerController.h"
+#import "TZXDVideoPreviewController.h"
 #import "TZGifPhotoPreviewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "TZImageRequestOperation.h"
@@ -712,9 +713,15 @@ static CGFloat itemMargin = 5;
             TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
             [imagePickerVc showAlertWithTitle:[NSBundle tz_localizedStringForKey:@"Can not choose both video and photo"]];
         } else {
-            TZVideoPlayerController *videoPlayerVc = [[TZVideoPlayerController alloc] init];
-            videoPlayerVc.model = model;
-            [self.navigationController pushViewController:videoPlayerVc animated:YES];
+            if (tzImagePickerVc.customVideoPreview == YES) {
+                TZXDVideoPreviewController *videoPlayerVc = [[TZXDVideoPreviewController alloc] init];
+                videoPlayerVc.model = model;
+                [self.navigationController pushViewController:videoPlayerVc animated:YES];
+            } else {
+                TZVideoPlayerController *videoPlayerVc = [[TZVideoPlayerController alloc] init];
+                videoPlayerVc.model = model;
+                [self.navigationController pushViewController:videoPlayerVc animated:YES];
+            }
         }
     } else if (model.type == TZAssetModelMediaTypePhotoGif && tzImagePickerVc.allowPickingGif && !tzImagePickerVc.allowPickingMultipleVideo) {
         if (tzImagePickerVc.selectedModels.count > 0) {
