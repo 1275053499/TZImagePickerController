@@ -49,6 +49,10 @@
 /// This init method for crop photo / 用这个初始化方法以裁剪图片
 - (instancetype)initCropTypeWithAsset:(PHAsset *)asset photo:(UIImage *)photo completion:(void (^)(UIImage *cropImage,PHAsset *asset))completion;
 
+#pragma mark - 喜第项目需要进行改动
+//是否使用XD3.9需求特定的预览页面｜封面选择页面
+@property (nonatomic, assign) BOOL customVideoPreview;
+
 #pragma mark -
 /// Default is 9 / 默认最大可选9张图片
 @property (nonatomic, assign) NSInteger maxImagesCount;
@@ -282,7 +286,8 @@
 @property (nonatomic, copy) void (^didFinishPickingVideoHandle)(UIImage *coverImage,PHAsset *asset);
 @property (nonatomic, copy) void (^didFinishPickingAndEditingVideoHandle)(UIImage *coverImage,NSString *outputPath,NSString *errorMsg);
 @property (nonatomic, copy) void (^didFinishPickingGifImageHandle)(UIImage *animatedImage,id sourceAssets);
-
+//喜第需求添加【返回预览视频选择封面】
+@property (nonatomic, copy) void (^didFinishPickingAndQualityAndGetCoverVideoHandle)(UIImage *coverImage,PHAsset *asset,NSString *outputPath,NSString *errorMsg);
 @property (nonatomic, weak) id<TZImagePickerControllerDelegate> pickerDelegate;
 
 @end
@@ -319,6 +324,8 @@
 // 如果用户选择了一个视频且allowPickingMultipleVideo是NO，下面的代理方法会被执行
 // 如果allowPickingMultipleVideo是YES，将会调用imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset;
+//如果运行的使用喜第视频自定义功能customVideoPreview是YES下面的代理方法会被执行
+- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingAndQualityAndGetCoverVideo:(UIImage *)coverImage  sourceAssets:(PHAsset *)asset outputPath:(NSString *)outputPath error:(NSString *)errorMsg;
 
 // If allowEditVideo is YES and allowPickingMultipleVideo is NO, When user picking a video, this callback will be called.
 // If allowPickingMultipleVideo is YES, video editing is not supported, will call imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:
