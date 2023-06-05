@@ -212,28 +212,17 @@
  */
 #pragma mark -
 - (void)nextButtonClick {
-    
-    //AVAssetExportPresetHighestQuality  高等质量
-    //AVAssetExportPresetMediumQuality   中等质量
+    NSLog(@"选择封面下一步");
     TZImagePickerController *imagePickerVc      = (TZImagePickerController *)self.navigationController;
-    [imagePickerVc showProgressHUD];
-    [[TZImageManager manager] getVideoOutputPathWithAsset:_model.asset presetName: self.previewQuality?AVAssetExportPresetHighestQuality:AVAssetExportPresetMediumQuality success:^(NSString *outputPath) {
-        NSLog(@"选择封面后处理视频清晰度得到的地址：%@",outputPath);
-        self->_outputPath = outputPath;
-        [imagePickerVc hideProgressHUD];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (imagePickerVc.autoDismiss) {
-                [imagePickerVc dismissViewControllerAnimated:YES completion:^{
-                    [self callDelegateMethod];
-                }];
-            } else {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (imagePickerVc.autoDismiss) {
+            [imagePickerVc dismissViewControllerAnimated:YES completion:^{
                 [self callDelegateMethod];
-            }
-        });
-    } failure:^(NSString *errorMessage, NSError *error) {
-        [imagePickerVc hideProgressHUD];
-        [imagePickerVc showAlertWithTitle:@"errorMessage"];
-    }];
+            }];
+        } else {
+            [self callDelegateMethod];
+        }
+    });    
 }
 
 /*
@@ -250,14 +239,13 @@
     }
     
     TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
-    if ([imagePickerVc.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingAndQualityAndGetCoverVideo:sourceAssets:outputPath:error:)]) {
-        [imagePickerVc.pickerDelegate imagePickerController:imagePickerVc didFinishPickingAndQualityAndGetCoverVideo:coverImage sourceAssets:_model.asset outputPath:_outputPath error:nil];
+    if ([imagePickerVc.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingAndQualityAndGetCoverVideo:sourceAssets:isHeightQuality:error:)]) {
+        [imagePickerVc.pickerDelegate imagePickerController:imagePickerVc didFinishPickingAndQualityAndGetCoverVideo:coverImage sourceAssets:_model.asset isHeightQuality:self.previewQuality error:nil];
     }
     if (imagePickerVc.didFinishPickingAndQualityAndGetCoverVideoHandle) {
-        imagePickerVc.didFinishPickingAndQualityAndGetCoverVideoHandle(coverImage,_model.asset,_outputPath,nil);
+        imagePickerVc.didFinishPickingAndQualityAndGetCoverVideoHandle(coverImage,_model.asset,self.previewQuality,nil);
     }
 }
-
 #pragma mark - UICollectiobViewDataSource & UIcollectionViewDelegate
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
