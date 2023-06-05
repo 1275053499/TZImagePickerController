@@ -531,10 +531,11 @@ static CGFloat itemMargin = 5;
     if (tzImagePickerVc.autoDismiss) {
         TZAssetModel * firstModel = _models.firstObject;
         if (tzImagePickerVc.customVideoPreview == YES && tzImagePickerVc.maxImagesCount==1 && firstModel.asset.mediaType == PHAssetMediaTypeVideo) {
-//            PHAssetMediaTypeUnknown = 0,
-//            PHAssetMediaTypeImage   = 1,
-//            PHAssetMediaTypeVideo   = 2,
-//            PHAssetMediaTypeAudio   = 3,
+            //修复可以给喜第手动拍视频了去选择封面的逻辑
+            //PHAssetMediaTypeUnknown = 0,
+            //PHAssetMediaTypeImage   = 1,
+            //PHAssetMediaTypeVideo   = 2,
+            //PHAssetMediaTypeAudio   = 3,
             TZXDVideoPreviewController *videoPlayerVc = [[TZXDVideoPreviewController alloc] init];
             videoPlayerVc.model = _models.firstObject;
             [self.navigationController pushViewController:videoPlayerVc animated:YES];
