@@ -287,7 +287,7 @@
 @property (nonatomic, copy) void (^didFinishPickingAndEditingVideoHandle)(UIImage *coverImage,NSString *outputPath,NSString *errorMsg);
 @property (nonatomic, copy) void (^didFinishPickingGifImageHandle)(UIImage *animatedImage,id sourceAssets);
 //喜第需求添加【返回预览视频选择封面】
-@property (nonatomic, copy) void (^didFinishPickingAndQualityAndGetCoverVideoHandle)(UIImage *coverImage,PHAsset *asset,BOOL isHeightQuality,NSString *errorMsg)
+@property (nonatomic, copy) void (^didFinishPickingAndQualityAndGetCoverVideoHandle)(UIImage *coverImage,PHAsset *asset,BOOL isHeightQuality,NSString *errorMsg);
 @property (nonatomic, weak) id<TZImagePickerControllerDelegate> pickerDelegate;
 
 @end
