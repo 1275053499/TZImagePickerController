@@ -65,7 +65,7 @@
             self->_player            = [AVPlayer playerWithPlayerItem:playerItem];
             self->_playerLayer       = [AVPlayerLayer playerLayerWithPlayer:self->_player];
             self->_playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-            CGFloat toolBarHeight = ([TZCommonTools tz_safeAreaInsets].bottom > 0) ? [TZCommonTools tz_safeAreaInsets].bottom : 17 + 17 + 41;
+            CGFloat toolBarHeight = ([TZCommonTools tz_safeAreaInsets].bottom > 0) ? ([TZCommonTools tz_safeAreaInsets].bottom  + 17 + 17 + 41): 17 + 17 + 41;
             self->_playerLayer.frame = CGRectMake(0, 0, self.view.tz_width, self.view.tz_height-toolBarHeight);
             [self.view.layer addSublayer:self->_playerLayer];
             [self configPlayButton];
@@ -158,7 +158,7 @@
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     
-    CGFloat toolBarHeight           = ([TZCommonTools tz_safeAreaInsets].bottom > 0) ? [TZCommonTools tz_safeAreaInsets].bottom : 17 + 17 + 41;
+    CGFloat toolBarHeight = ([TZCommonTools tz_safeAreaInsets].bottom > 0) ? ([TZCommonTools tz_safeAreaInsets].bottom  + 17 + 17 + 41): 17 + 17 + 41;
     _previewBarView.frame           = CGRectMake(0, self.view.tz_height - toolBarHeight, self.view.tz_width, toolBarHeight);
     _previewBackBtn.frame           = CGRectMake(15, 17, 53, 41);
     _previewGetCoverBtn.frame       = CGRectMake(15+53+15, 17, self.view.tz_width-(15+53+15+15), 41);
