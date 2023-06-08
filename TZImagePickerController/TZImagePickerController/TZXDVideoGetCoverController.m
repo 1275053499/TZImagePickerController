@@ -114,7 +114,9 @@
     _imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:_asset];
     _imageGenerator.requestedTimeToleranceBefore    = kCMTimeZero;
     _imageGenerator.requestedTimeToleranceAfter     = kCMTimeZero;
- 
+    if (_model.asset.pixelHeight > _model.asset.pixelWidth) {
+        _imageGenerator.appliesPreferredTrackTransform = YES;
+    }
     NSTimeInterval durationSeconds  = self.model.asset.duration;
     NSUInteger imageCount           = self.model.asset.duration;
 
