@@ -64,7 +64,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_player            = [AVPlayer playerWithPlayerItem:playerItem];
             self->_playerLayer       = [AVPlayerLayer playerLayerWithPlayer:self->_player];
-            self->_playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
             CGFloat toolBarHeight = ([TZCommonTools tz_safeAreaInsets].bottom > 0) ? ([TZCommonTools tz_safeAreaInsets].bottom  + 17 + 17 + 41): 17 + 17 + 41;
             self->_playerLayer.frame = CGRectMake(0, 0, self.view.tz_width, self.view.tz_height-toolBarHeight);
             [self.view.layer addSublayer:self->_playerLayer];
