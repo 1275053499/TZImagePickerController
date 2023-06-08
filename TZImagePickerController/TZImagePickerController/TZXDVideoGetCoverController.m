@@ -45,7 +45,7 @@
     [self.view addSubview:self.baseView];
     
     self.showImgView                = [[UIImageView alloc]initWithFrame:CGRectMake(15, [TZCommonTools tz_statusBarHeight]+44,self.view.tz_width-30, self.view.tz_height-151-[TZCommonTools tz_statusBarHeight]-44)];
-    self.showImgView.contentMode = UIViewContentModeScaleAspectFill;
+    self.showImgView.contentMode = UIViewContentModeScaleAspectFit;
     self.showImgView.clipsToBounds = YES;
     [self.baseView addSubview:self.showImgView];
     
@@ -309,7 +309,7 @@
 - (void)initSubViews {
     
     _imgView                    = [[UIImageView alloc] initWithFrame:CGRectMake(1, 1, 44, 52)];
-    _imgView.contentMode        = UIViewContentModeScaleAspectFill;
+    _imgView.contentMode        = UIViewContentModeScaleAspectFit;
     _imgView.clipsToBounds      = YES;
     _imgView.layer.cornerRadius = 6;
     [self.contentView addSubview:_imgView];
