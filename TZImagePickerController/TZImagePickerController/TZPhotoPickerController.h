@@ -16,8 +16,9 @@
 @property (nonatomic, strong) TZAlbumModel *model;
 ///使用XD相册数据源
 @property (nonatomic, strong) NSMutableArray *albumArr;
-///使用XD相册标题
+///使用XD相册标题按钮
 @property (nonatomic, strong)UIButton * albumTitleView;
+
 @end
 
 

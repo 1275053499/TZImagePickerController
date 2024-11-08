@@ -926,7 +926,6 @@
     photoPickerVc.columnNumber = self.columnNumber;
     TZAlbumModel *model  = _albumArr[indexPath.row];
     photoPickerVc.model = model;
-    photoPickerVc.albumArr = _albumArr;
     [self.navigationController pushViewController:photoPickerVc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
