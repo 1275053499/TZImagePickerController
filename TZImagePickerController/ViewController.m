@@ -297,6 +297,8 @@
     [imagePickerVc setUiImagePickerControllerSettingBlock:^(UIImagePickerController *imagePickerController) {
         imagePickerController.videoQuality = UIImagePickerControllerQualityTypeHigh;
     }];
+    imagePickerVc.customVideoPreview = YES;
+    imagePickerVc.customShowAlbumCategory = YES;
     // imagePickerVc.autoSelectCurrentWhenDone = NO;
     
     // imagePickerVc.photoWidth = 1600;

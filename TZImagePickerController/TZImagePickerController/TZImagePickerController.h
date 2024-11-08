@@ -52,7 +52,8 @@
 #pragma mark - 喜第项目需要进行改动
 //是否使用XD3.9需求特定的预览页面｜封面选择页面
 @property (nonatomic, assign) BOOL customVideoPreview;
-
+//是否使用XD 特定的相册分类功能，不返回页面选择
+@property (nonatomic, assign) BOOL customShowAlbumCategory;
 #pragma mark -
 /// Default is 9 / 默认最大可选9张图片
 @property (nonatomic, assign) NSInteger maxImagesCount;

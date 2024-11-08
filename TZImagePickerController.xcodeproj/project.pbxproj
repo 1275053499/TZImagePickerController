@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0517ADA62CDDA17E00F4668E /* TZXDVideoGetCoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0517ADA32CDDA17E00F4668E /* TZXDVideoGetCoverController.m */; };
+		0517ADA72CDDA17E00F4668E /* TZXDVideoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0517ADA52CDDA17E00F4668E /* TZXDVideoPreviewController.m */; };
+		0517ADA82CDDA17E00F4668E /* TZXDVideoPreviewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0517ADA42CDDA17E00F4668E /* TZXDVideoPreviewController.h */; };
+		0517ADA92CDDA17E00F4668E /* TZXDVideoGetCoverController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0517ADA22CDDA17E00F4668E /* TZXDVideoGetCoverController.h */; };
+		0517ADAA2CDDA17E00F4668E /* TZXDVideoGetCoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0517ADA32CDDA17E00F4668E /* TZXDVideoGetCoverController.m */; };
+		0517ADAB2CDDA17E00F4668E /* TZXDVideoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0517ADA52CDDA17E00F4668E /* TZXDVideoPreviewController.m */; };
 		441B78D32BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 441B78D22BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy */; };
 		441B78D42BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 441B78D22BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy */; };
 		441B78D52BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 441B78D22BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy */; };
@@ -126,6 +132,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0517ADA22CDDA17E00F4668E /* TZXDVideoGetCoverController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TZXDVideoGetCoverController.h; sourceTree = "<group>"; };
+		0517ADA32CDDA17E00F4668E /* TZXDVideoGetCoverController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TZXDVideoGetCoverController.m; sourceTree = "<group>"; };
+		0517ADA42CDDA17E00F4668E /* TZXDVideoPreviewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TZXDVideoPreviewController.h; sourceTree = "<group>"; };
+		0517ADA52CDDA17E00F4668E /* TZXDVideoPreviewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TZXDVideoPreviewController.m; sourceTree = "<group>"; };
 		441B78D22BBD7E0300A1CB09 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		570A348B26D7275C000EEF2E /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Photos.framework; sourceTree = DEVELOPER_DIR; };
 		570A348D26D72762000EEF2E /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/PhotosUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -340,6 +350,10 @@
 		900EEFF51C2BBF7600EA709B /* TZImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				0517ADA22CDDA17E00F4668E /* TZXDVideoGetCoverController.h */,
+				0517ADA32CDDA17E00F4668E /* TZXDVideoGetCoverController.m */,
+				0517ADA42CDDA17E00F4668E /* TZXDVideoPreviewController.h */,
+				0517ADA52CDDA17E00F4668E /* TZXDVideoPreviewController.m */,
 				900EEFF61C2BBF9500EA709B /* TZImagePickerController.h */,
 				900EEFF71C2BBF9500EA709B /* TZImagePickerController.m */,
 				900EEFFC1C2BD58B00EA709B /* TZPhotoPickerController.h */,
@@ -426,6 +440,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0517ADA82CDDA17E00F4668E /* TZXDVideoPreviewController.h in Headers */,
+				0517ADA92CDDA17E00F4668E /* TZXDVideoGetCoverController.h in Headers */,
 				901CC3FA21CB757500C55443 /* TZImageRequestOperation.h in Headers */,
 				9F763A6B1FA0731E00D9E526 /* TZImagePickerController.h in Headers */,
 				9F763A6D1FA0733700D9E526 /* NSBundle+TZImagePicker.h in Headers */,
@@ -531,8 +547,7 @@
 				TargetAttributes = {
 					900E657B1C2BB8D5003D9A9E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3TA49P2Q58;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					900E65941C2BB8D5003D9A9E = {
 						CreatedOnToolsVersion = 7.2;
@@ -633,6 +648,8 @@
 				6D4608311DFFC60D004FB009 /* TZGifPhotoPreviewController.m in Sources */,
 				900EF0161C2C134900EA709B /* TZPhotoPreviewCell.m in Sources */,
 				900E65871C2BB8D5003D9A9E /* ViewController.m in Sources */,
+				0517ADA62CDDA17E00F4668E /* TZXDVideoGetCoverController.m in Sources */,
+				0517ADA72CDDA17E00F4668E /* TZXDVideoPreviewController.m in Sources */,
 				90CE84AE1C3A89EF003D0779 /* TZImageManager.m in Sources */,
 				901F2295215CABD600F604ED /* FLAnimatedImage.m in Sources */,
 				908D11582887ED8000DD212E /* TZLocationManager.m in Sources */,
@@ -679,6 +696,8 @@
 				9F763A541FA072E500D9E526 /* TZAssetCell.m in Sources */,
 				9F763A561FA072E500D9E526 /* TZAssetModel.m in Sources */,
 				9F763A581FA072E500D9E526 /* TZPhotoPreviewController.m in Sources */,
+				0517ADAA2CDDA17E00F4668E /* TZXDVideoGetCoverController.m in Sources */,
+				0517ADAB2CDDA17E00F4668E /* TZXDVideoPreviewController.m in Sources */,
 				9005E2B4257A462E002A8682 /* UIView+TZLayout.m in Sources */,
 				9F763A5A1FA072E500D9E526 /* TZPhotoPreviewCell.m in Sources */,
 				9F763A5C1FA072E500D9E526 /* TZVideoPlayerController.m in Sources */,
@@ -852,9 +871,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3TA49P2Q58;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
@@ -863,7 +881,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 3.8.7;
-				PRODUCT_BUNDLE_IDENTIFIER = tanzhenios2025.TZImagePickerController.www;
+				PRODUCT_BUNDLE_IDENTIFIER = samllClique.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -878,8 +896,8 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LTFQDC2QVX;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
@@ -888,7 +906,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 3.8.7;
-				PRODUCT_BUNDLE_IDENTIFIER = tanzhenios2022.TZImagePickerController.www;
+				PRODUCT_BUNDLE_IDENTIFIER = samllClique.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
