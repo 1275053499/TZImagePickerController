@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *albumArr;
 ///使用XD相册数据源
 @property (nonatomic, strong)UINavigationController *navigationController;
-
+///使用XD相册选择回调
 @property (nonatomic, copy) void (^albumCellDidBackModelBlock)(TZAlbumModel *model);
 
 @end

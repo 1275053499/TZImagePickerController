@@ -9,7 +9,7 @@
 #import "TZXDAlbumCategoryView.h"
 #import "TZImagePickerController.h"
 #import "UIView+TZLayout.h"
-@interface TZXDAlbumCategoryView ()<UITableViewDataSource, UITableViewDelegate, PHPhotoLibraryChangeObserver> {
+@interface TZXDAlbumCategoryView ()<UITableViewDataSource, UITableViewDelegate> {
     UITableView *_tableView;
 }
 
@@ -25,12 +25,6 @@
         [self xd_initAction];
     }
     return self;
-}
-
-- (void)photoLibraryDidChange:(PHChange *)changeInstance {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //[self configTableView];
-    });
 }
 
 -(void)xd_initView{
