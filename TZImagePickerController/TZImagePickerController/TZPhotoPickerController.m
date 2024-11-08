@@ -95,6 +95,8 @@ static CGFloat itemMargin = 5;
         self.view.backgroundColor = [UIColor whiteColor];
     }
     self.navigationItem.title = _model.name;
+    
+    
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:tzImagePickerVc.cancelBtnTitleStr style:UIBarButtonItemStylePlain target:tzImagePickerVc action:@selector(cancelButtonClick)];
     [TZCommonTools configBarButtonItem:cancelItem tzImagePickerVc:tzImagePickerVc];
     self.navigationItem.rightBarButtonItem = cancelItem;
@@ -105,9 +107,29 @@ static CGFloat itemMargin = 5;
         tzImagePickerVc.navLeftBarButtonSettingBlock(leftButton);
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     } else if (tzImagePickerVc.childViewControllers.count) {
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle tz_localizedStringForKey:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(navLeftBarButtonClick)];
-        [TZCommonTools configBarButtonItem:backItem tzImagePickerVc:tzImagePickerVc];
-        [tzImagePickerVc.childViewControllers firstObject].navigationItem.backBarButtonItem = backItem;
+        NSLog(@"%ld",tzImagePickerVc.childViewControllers.count);
+        if (tzImagePickerVc.customShowAlbumCategory) {
+            self.navigationItem.hidesBackButton = YES;
+            UIView *titleView = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+            titleView.backgroundColor = UIColor.redColor;
+            self.navigationItem.titleView = titleView;
+            self.albumTitleView = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+//            [self.albumTitleView setTitle:_model.name forState:UIControlStateNormal];
+//            [self.albumTitleView setTitle:_model.name forState:UIControlStateSelected];
+//            [self.albumTitleView setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [self.albumTitleView setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+            [self.albumTitleView setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_tz_album_trangle"] forState:UIControlStateNormal];
+            [self.albumTitleView setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_tz_album_trangle"] forState:UIControlStateSelected];
+//            self.albumTitleView.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+//            self.albumTitleView.titleEdgeInsets = UIEdgeInsetsMake(0, -4, 0, 4);
+//            self.albumTitleView.imageEdgeInsets = UIEdgeInsetsMake(0, 4, 0, 4);
+            [self.albumTitleView addTarget:self action:@selector(albumCategoryClick) forControlEvents:UIControlEventTouchUpInside];
+            [titleView addSubview:self.albumTitleView];
+        } else {
+            UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle tz_localizedStringForKey:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(navLeftBarButtonClick)];
+            [TZCommonTools configBarButtonItem:backItem tzImagePickerVc:tzImagePickerVc];
+            [tzImagePickerVc.childViewControllers firstObject].navigationItem.backBarButtonItem = backItem;
+        }
     }
     _showTakePhotoBtn = _model.isCameraRoll && ((tzImagePickerVc.allowTakePicture && tzImagePickerVc.allowPickingImage) || (tzImagePickerVc.allowTakeVideo && tzImagePickerVc.allowPickingVideo));
     _authorizationLimited = _model.isCameraRoll && [[TZImageManager manager] isPHAuthorizationStatusLimited];
@@ -116,6 +138,8 @@ static CGFloat itemMargin = 5;
     
     self.operationQueue = [[NSOperationQueue alloc] init];
     self.operationQueue.maxConcurrentOperationCount = 3;
+    
+    
 }
 
 - (void)fetchAssetModels {
@@ -439,6 +463,11 @@ static CGFloat itemMargin = 5;
 }
 
 #pragma mark - Click Event
+//切换相册
+- (void)albumCategoryClick {
+    NSLog(@"切换相册");
+}
+
 - (void)navLeftBarButtonClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -1277,9 +1306,12 @@ static CGFloat itemMargin = 5;
 }
 #pragma clang diagnostic pop
 
+-(void)setAlbumArr:(NSMutableArray *)albumArr{
+    _albumArr = albumArr;
+    NSLog(@"setAlbumArr:%ld",albumArr.count);
+}
+
 @end
-
-
 
 @implementation TZCollectionView
 

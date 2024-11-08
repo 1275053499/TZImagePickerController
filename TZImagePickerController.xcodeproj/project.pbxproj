@@ -547,6 +547,7 @@
 				TargetAttributes = {
 					900E657B1C2BB8D5003D9A9E = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 23XX8727YV;
 						ProvisioningStyle = Manual;
 					};
 					900E65941C2BB8D5003D9A9E = {
@@ -871,8 +872,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 23XX8727YV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
@@ -881,10 +884,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 3.8.7;
-				PRODUCT_BUNDLE_IDENTIFIER = samllClique.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beauty.daily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = DeautyDailyDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -898,6 +902,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 23XX8727YV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
@@ -906,10 +911,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 3.8.7;
-				PRODUCT_BUNDLE_IDENTIFIER = samllClique.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.beauty.daily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = DeautyDailyDev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

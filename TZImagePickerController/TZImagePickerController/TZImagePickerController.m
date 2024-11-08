@@ -431,7 +431,7 @@
     if (!_didPushPhotoPickerVc && _pushPhotoPickerVc) {
         TZPhotoPickerController *photoPickerVc = [[TZPhotoPickerController alloc] init];
         photoPickerVc.isFirstAppear = YES;
-        photoPickerVc.columnNumber = self.columnNumber;
+        photoPickerVc.columnNumber  = self.columnNumber;
         [[TZImageManager manager] getCameraRollAlbumWithFetchAssets:NO completion:^(TZAlbumModel *model) {
             photoPickerVc.model = model;
             [self pushViewController:photoPickerVc animated:YES];
@@ -498,6 +498,17 @@
         [_HUDIndicatorView stopAnimating];
         [_progressHUD removeFromSuperview];
     }
+}
+
+#pragma mark - 喜第项目需要进行改动
+//是否使用XD3.9需求特定的预览页面｜封面选择页面
+-(void)setCustomVideoPreview:(BOOL)customVideoPreview{
+    _customVideoPreview = customVideoPreview;
+}
+
+//是否使用XD8.0 特定的相册分类功能，不返回页面选择
+-(void)setCustomShowAlbumCategory:(BOOL)customShowAlbumCategory{
+    _customShowAlbumCategory = customShowAlbumCategory;
 }
 
 - (void)setMaxImagesCount:(NSInteger)maxImagesCount {
@@ -913,8 +924,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TZPhotoPickerController *photoPickerVc = [[TZPhotoPickerController alloc] init];
     photoPickerVc.columnNumber = self.columnNumber;
-    TZAlbumModel *model = _albumArr[indexPath.row];
+    TZAlbumModel *model  = _albumArr[indexPath.row];
     photoPickerVc.model = model;
+    photoPickerVc.albumArr = _albumArr;
     [self.navigationController pushViewController:photoPickerVc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
