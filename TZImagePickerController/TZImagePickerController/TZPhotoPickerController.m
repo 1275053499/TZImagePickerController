@@ -163,7 +163,6 @@ static CGFloat itemMargin = 5;
         if (tzImagePickerVc.customShowAlbumCategory) {
             //XD相册分类需求
             [self configAlbumCategoryView];
-            [self checkShowSlider];
         }
     });
 }
@@ -502,8 +501,8 @@ static CGFloat itemMargin = 5;
     if (tzImagePickerVc.customShowAlbumCategory) {
         _albumCategoryBar.frame = CGRectMake(0, top, self.view.tz_width, self.view.tz_height - top);
         _albumCategoryView.frame = _albumCategoryBar.bounds;
-       
         _rightSliderView.frame = CGRectMake(self.view.tz_width - 32 + 6, top, 32, 52);
+        [self checkShowSlider];
     }
 }
 
@@ -914,20 +913,22 @@ static CGFloat itemMargin = 5;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // [self updateCachedAssets];
     
-    CGPoint offset = scrollView.contentOffset;
-    NSLog(@"水平滚动位置: \(%f), 垂直滚动位置: \(%f)",offset.x,offset.y);
-    if ([scrollView isKindOfClass:[UICollectionView class]]) {
-        NSLog(@"scrollViewDidScroll--UICollectionView:%ld",self.sliderPanGes.state);
-        {
-            [UIView animateWithDuration:0.25 animations:^{
-                CGPoint offset =  self.collectionView.contentOffset;
-                CGRect frame = self.rightSliderView.frame;
-                frame.origin.y = self.collectionView.tz_top + offset.y *(self.collectionView.frame.size.height-self.rightSliderView.frame.size.height)/(self.collectionView.contentSize.height-self.collectionView.frame.size.height);
-                NSLog(@"scrollViewDidScroll移动的速度--:|%f|--|%f|--|%f|", frame.origin.y,self.collectionView.contentSize.height,self.collectionView.frame.size.height);
-                self.rightSliderView.frame = frame;
-            }];
-        }
-    } else {}
+    {
+        CGPoint offset = scrollView.contentOffset;
+        //NSLog(@"水平滚动位置: \(%f), 垂直滚动位置: \(%f)",offset.x,offset.y);
+        if ([scrollView isKindOfClass:[UICollectionView class]]) {
+            //NSLog(@"scrollViewDidScroll--UICollectionView:%ld",self.sliderPanGes.state);
+            {
+                [UIView animateWithDuration:0.25 animations:^{
+                    CGPoint offset =  self.collectionView.contentOffset;
+                    CGRect frame = self.rightSliderView.frame;
+                    frame.origin.y = self.collectionView.tz_top + offset.y *(self.collectionView.frame.size.height-self.rightSliderView.frame.size.height)/(self.collectionView.contentSize.height-self.collectionView.frame.size.height);
+                    //NSLog(@"scrollViewDidScroll移动的速度--:|%f|--|%f|--|%f|", frame.origin.y,self.collectionView.contentSize.height,self.collectionView.frame.size.height);
+                    self.rightSliderView.frame = frame;
+                }];
+            }
+        } else {}
+    }
 }
 
 - (void)slider_panGestureAction:(UIPanGestureRecognizer *)panGestureRecognizer {
@@ -947,11 +948,11 @@ static CGFloat itemMargin = 5;
         frame.origin.y = CGRectGetMinY(self.collectionView.frame);
     }
     moveView.frame = frame;
-    if (verPoint.y < 0) {
-        NSLog(@"sliderPanGes移动的速度--:|%f|-->往上--%f",point.y,frame.origin.y);
-    } else {
-        NSLog(@"sliderPanGes移动的速度--:|%f|-->往下--%f",point.y,frame.origin.y);
-    }
+//    if (verPoint.y < 0) {
+//        NSLog(@"sliderPanGes移动的速度--:|%f|-->往上--%f",point.y,frame.origin.y);
+//    } else {
+//        NSLog(@"sliderPanGes移动的速度--:|%f|-->往下--%f",point.y,frame.origin.y);
+//    }
     [panGestureRecognizer setTranslation:CGPointZero inView:panGestureRecognizer.view];
      
     CGFloat frame_origin_y = frame.origin.y;
