@@ -21,7 +21,7 @@
 #import "TZAuthLimitedFooterTipView.h"
 #import <PhotosUI/PhotosUI.h>
 #import "TZXDAlbumCategoryView.h"
-@interface TZPhotoPickerController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, PHPhotoLibraryChangeObserver> {
+@interface TZPhotoPickerController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate, PHPhotoLibraryChangeObserver,UIGestureRecognizerDelegate> {
     NSMutableArray *_models;
     
     UIView *_bottomToolBar;
@@ -163,6 +163,7 @@ static CGFloat itemMargin = 5;
         if (tzImagePickerVc.customShowAlbumCategory) {
             //XD相册分类需求
             [self configAlbumCategoryView];
+            [self checkShowSlider];
         }
     });
 }
@@ -227,6 +228,9 @@ static CGFloat itemMargin = 5;
         [_collectionView reloadData];
     }
 
+    _collectionView.showsHorizontalScrollIndicator = NO;
+    _collectionView.showsVerticalScrollIndicator = NO;
+    
     if (!_authFooterTipView && _authorizationLimited) {
         _authFooterTipView = [[TZAuthLimitedFooterTipView alloc] initWithFrame:CGRectMake(0, 0, self.view.tz_width, 80)];
         UITapGestureRecognizer *footTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openSettingsApplication)];
@@ -240,6 +244,17 @@ static CGFloat itemMargin = 5;
     } else if (_noDataLabel) {
         [_noDataLabel removeFromSuperview];
         _noDataLabel = nil;
+    }
+    
+    {
+        self.rightSliderView = [[UIImageView alloc]initWithFrame:CGRectZero];
+        self.rightSliderView.image = [UIImage tz_imageNamedFromMyBundle:@"img_tz_slider"];
+        self.rightSliderView.userInteractionEnabled  = YES;
+        self.sliderPanGes = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(slider_panGestureAction:)];
+        self.sliderPanGes.delegate  = self;
+        self.sliderPanGes.cancelsTouchesInView = YES;
+        [self.rightSliderView addGestureRecognizer:self.sliderPanGes];
+        [self.view addSubview:_rightSliderView];
     }
 }
 
@@ -487,6 +502,8 @@ static CGFloat itemMargin = 5;
     if (tzImagePickerVc.customShowAlbumCategory) {
         _albumCategoryBar.frame = CGRectMake(0, top, self.view.tz_width, self.view.tz_height - top);
         _albumCategoryView.frame = _albumCategoryBar.bounds;
+       
+        _rightSliderView.frame = CGRectMake(self.view.tz_width - 32 + 6, top, 32, 52);
     }
 }
 
@@ -564,7 +581,15 @@ static CGFloat itemMargin = 5;
         self->_collectionView.hidden = NO;
         [self->_collectionView reloadData];
         [self prepareScrollCollectionViewToBottom];
+        [self checkShowSlider];
     });
+}
+
+//检查是否显示下拉条[数量未超过1.5页的滑动高度不展示下拉条]
+-(void)checkShowSlider{
+    NSInteger count =  ([self getAllCellCount] + (self.columnNumber-1)) /  self.columnNumber;
+    CGFloat allContentSizeH = count * (self.layout.itemSize.height + 5);
+    self.rightSliderView.hidden = (allContentSizeH < self.collectionView.tz_height * 1.5);
 }
 
 - (void)navLeftBarButtonClick{
@@ -888,6 +913,71 @@ static CGFloat itemMargin = 5;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     // [self updateCachedAssets];
+    
+    CGPoint offset = scrollView.contentOffset;
+    NSLog(@"水平滚动位置: \(%f), 垂直滚动位置: \(%f)",offset.x,offset.y);
+    if ([scrollView isKindOfClass:[UICollectionView class]]) {
+        NSLog(@"scrollViewDidScroll--UICollectionView:%ld",self.sliderPanGes.state);
+        {
+            [UIView animateWithDuration:0.25 animations:^{
+                CGPoint offset =  self.collectionView.contentOffset;
+                CGRect frame = self.rightSliderView.frame;
+                frame.origin.y = self.collectionView.tz_top + offset.y *(self.collectionView.frame.size.height-self.rightSliderView.frame.size.height)/(self.collectionView.contentSize.height-self.collectionView.frame.size.height);
+                NSLog(@"scrollViewDidScroll移动的速度--:|%f|--|%f|--|%f|", frame.origin.y,self.collectionView.contentSize.height,self.collectionView.frame.size.height);
+                self.rightSliderView.frame = frame;
+            }];
+        }
+    } else {}
+}
+
+- (void)slider_panGestureAction:(UIPanGestureRecognizer *)panGestureRecognizer {
+    // 移动的距离
+    CGPoint point = [panGestureRecognizer translationInView:panGestureRecognizer.view];
+    // 移动的速度
+    CGPoint verPoint = [panGestureRecognizer velocityInView:panGestureRecognizer.view];
+    
+    UIView *moveView = self.rightSliderView;
+    CGRect frame = moveView.frame;
+    frame.origin.y += point.y;
+    // 边界限定:
+    if (frame.origin.y >= (CGRectGetMaxY(self.collectionView.frame)-self.rightSliderView.tz_height)) {
+        frame.origin.y = (CGRectGetMaxY(self.collectionView.frame)-self.rightSliderView.tz_height);
+    }
+    if (frame.origin.y <= CGRectGetMinY(self.collectionView.frame)) {
+        frame.origin.y = CGRectGetMinY(self.collectionView.frame);
+    }
+    moveView.frame = frame;
+    if (verPoint.y < 0) {
+        NSLog(@"sliderPanGes移动的速度--:|%f|-->往上--%f",point.y,frame.origin.y);
+    } else {
+        NSLog(@"sliderPanGes移动的速度--:|%f|-->往下--%f",point.y,frame.origin.y);
+    }
+    [panGestureRecognizer setTranslation:CGPointZero inView:panGestureRecognizer.view];
+     
+    CGFloat frame_origin_y = frame.origin.y;
+
+    CGFloat newOffset_y =  (frame_origin_y - self.collectionView.tz_top) * (self.collectionView.contentSize.height-self.collectionView.frame.size.height) / (self.collectionView.frame.size.height-self.rightSliderView.frame.size.height);
+    [self.collectionView setContentOffset:CGPointMake(0, newOffset_y) animated:NO];
+}
+
+#pragma mark - UIGestureRecognizerDelegate 平移手势 手势处理
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    return YES;
+}
+
+///是否与其他手势共存
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if (gestureRecognizer == self.rightSliderView.gestureRecognizers.firstObject) {
+        if ([otherGestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewPanGestureRecognizer")]
+            || [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+            if ([otherGestureRecognizer.view isKindOfClass:[UICollectionView class]]) {
+                return YES;
+            }else{
+                
+            }
+        }
+    }
+    return NO;
 }
 
 #pragma mark - Private Method

@@ -18,6 +18,10 @@
 @property (nonatomic, strong) NSMutableArray *albumArr;
 ///使用XD相册标题按钮
 @property (nonatomic, strong)UIButton * albumTitleView;
+///使用XD相册自定义下拉条
+@property(nonatomic, strong)UIImageView * rightSliderView;
+///使用XD相册滑动手势
+@property(nonatomic, strong) UIPanGestureRecognizer *sliderPanGes;
 
 @end
 
