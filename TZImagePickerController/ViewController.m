@@ -31,6 +31,8 @@
     CGFloat _itemWH;
     CGFloat _margin;
 }
+
+@property (nonatomic, strong)TZImagePickerController *tzimagePickerVc;
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (strong, nonatomic) LxGridViewFlowLayout *layout;
@@ -278,10 +280,10 @@
     // 设置languageBundle以使用其它语言，必须在TZImagePickerController初始化前设置 / Set languageBundle to use other language
     // [TZImagePickerConfig sharedInstance].languageBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"tz-ru" ofType:@"lproj"]];
 
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:self.maxCountTF.text.integerValue columnNumber:self.columnNumberTF.text.integerValue delegate:self pushPhotoPickerVc:YES];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:self.maxCountTF.text.integerValue columnNumber:self.columnNumberTF.text.integerValue delegate:nil pushPhotoPickerVc:YES];
     imagePickerVc.customVideoPreview = YES;
     imagePickerVc.customShowAlbumCategory = YES;
-    
+    imagePickerVc.autoDismiss = NO;
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置
     imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
     
@@ -425,10 +427,12 @@
     // You can get the photos by block, the same as by delegate.
     // 你可以通过block或者代理，来得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-
+        [self.tzimagePickerVc tz_handleToDis];
     }];
     
     imagePickerVc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    self.tzimagePickerVc = imagePickerVc;
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 

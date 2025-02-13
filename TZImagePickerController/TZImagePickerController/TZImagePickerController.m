@@ -39,6 +39,13 @@
 
 @implementation TZImagePickerController
 
+-(void)tz_handleToDis{
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+            
+    }];
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -724,6 +731,12 @@
 }
 
 #pragma mark - Public
+
+- (void)tz_handledismissViewControllerAnimated: (BOOL)flag completion: (void (^)(void))completion{
+    [self dismissViewControllerAnimated:flag completion:^{
+        completion();
+    }];
+}
 
 - (void)cancelButtonClick {
     if (self.autoDismiss) {

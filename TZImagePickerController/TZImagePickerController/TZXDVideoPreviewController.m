@@ -19,6 +19,9 @@
     AVPlayerLayer *_playerLayer;
     ///播放｜暂停
     UIButton *_playButton;
+    
+    ///预留封面
+    UIImage                 *_cover;
 }
 
 // iCloud无法同步提示UI
@@ -59,6 +62,14 @@
  * @date 2023.06.01
  */
 -(void)configMoviePlayer{
+    
+    //分解获取一个预留的封面
+    [[TZImageManager manager] getPhotoWithAsset:_model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+        if (!isDegraded && photo) {
+            self->_cover = photo;
+        }
+    }];
+    
     NSLog(@"视频预览的新界面～～添加视频播放器～～");
     [[TZImageManager manager] getVideoWithAsset:_model.asset completion:^(AVPlayerItem *playerItem, NSDictionary *info) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -83,7 +94,7 @@
 -(void)configBottomBar{
     
     _previewBarView = [[UIView alloc]initWithFrame:CGRectZero];
-    CGFloat rgb     = 16 / 255.0;
+    CGFloat rgb     = 0 / 255.0;
     _previewBarView.backgroundColor = [UIColor colorWithRed:rgb green:rgb blue:rgb alpha:1];
     [self.view addSubview:_previewBarView];
     
@@ -96,8 +107,8 @@
     _previewGetCoverBtn   = [UIButton buttonWithType:UIButtonTypeCustom];
     [_previewGetCoverBtn setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_preview_next"] forState:UIControlStateNormal];
     [_previewGetCoverBtn setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_preview_next"] forState:UIControlStateHighlighted];
-    [_previewGetCoverBtn setTitle:@"封面选择" forState:UIControlStateNormal];
-    [_previewGetCoverBtn setTitle:@"封面选择" forState:UIControlStateHighlighted];
+    [_previewGetCoverBtn setTitle:@"继续" forState:UIControlStateNormal];
+    [_previewGetCoverBtn setTitle:@"继续" forState:UIControlStateHighlighted];
     [_previewGetCoverBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_previewGetCoverBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_previewGetCoverBtn addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -122,11 +133,9 @@
     _previewQualityView.backgroundColor = UIColor.clearColor;
     
     _previewQualityBtn                    = [[UIButton alloc]initWithFrame:CGRectZero];
-    _previewQualityBtn.layer.cornerRadius = 5;
-    _previewQualityBtn.clipsToBounds      = YES;
-    _previewQualityBtn.layer.borderWidth  = 1.5;
-    _previewQualityBtn.backgroundColor    = [UIColor colorWithWhite:1 alpha:0.0];
-    _previewQualityBtn.layer.borderColor  = [UIColor colorWithWhite:1 alpha:0.7].CGColor;
+    [_previewQualityBtn setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_preview_quality_1"] forState:UIControlStateNormal];
+    [_previewQualityBtn setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_preview_quality_1"] forState:UIControlStateHighlighted];
+    [_previewQualityBtn setImage:[UIImage tz_imageNamedFromMyBundle:@"btn_preview_quality_2"] forState:UIControlStateSelected];
     [_previewQualityBtn addTarget:self action:@selector(qualityButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [_previewQualityView addSubview:_previewQualityBtn];
     
@@ -160,12 +169,12 @@
     CGFloat toolBarHeight = ([TZCommonTools tz_safeAreaInsets].bottom > 0) ? ([TZCommonTools tz_safeAreaInsets].bottom  + 17 + 17 + 41): 17 + 17 + 41;
     _previewBarView.frame           = CGRectMake(0, self.view.tz_height - toolBarHeight, self.view.tz_width, toolBarHeight);
     _previewBackBtn.frame           = CGRectMake(15, 17, 53, 41);
-    _previewGetCoverBtn.frame       = CGRectMake(15+53+15, 17, self.view.tz_width-(15+53+15+15), 41);
+    _previewGetCoverBtn.frame       = CGRectMake(self.view.tz_width-(15+53), 17, 53, 41);
     
     _playButton.frame               = CGRectMake(0, 0, self.view.tz_width, self.view.tz_height - toolBarHeight-(10+10+17));
     
     _previewQualityView.frame       = CGRectMake(0, self.view.tz_height - toolBarHeight-(10+10+17), self.view.tz_width, 10+10+17);
-    _previewQualityBtn.frame        = CGRectMake(15, (10+10+17-10)/2, 10, 10);
+    _previewQualityBtn.frame        = CGRectMake(14, (10+10+17-12)/2, 12, 12);
     _previewQualityLabel.frame      = CGRectMake(CGRectGetMaxX(_previewQualityBtn.frame)+5, 0, 200, (10+10+17));
 }
 
@@ -178,13 +187,11 @@
     
     self.previewQuality = !self.previewQuality;
     if (self.previewQuality) {
-        _previewQualityBtn.backgroundColor    = [UIColor colorWithRed:42/255.0 green:215/255.0 blue:255/255.0 alpha:1];
-        _previewQualityBtn.layer.borderColor  = [UIColor colorWithRed:42/255.0 green:215/255.0 blue:255/255.0 alpha:1].CGColor;
-        _previewQualityLabel.textColor        = [UIColor colorWithRed:42/255.0 green:215/255.0 blue:255/255.0 alpha:1];
+        _previewQualityBtn.selected = YES;
+        _previewQualityLabel.textColor = [UIColor colorWithWhite:1 alpha:1.0];
     } else {
-        _previewQualityBtn.backgroundColor    = [UIColor colorWithWhite:1 alpha:0.0];
-        _previewQualityBtn.layer.borderColor  = [UIColor colorWithWhite:1 alpha:0.7].CGColor;
-        _previewQualityLabel.textColor        = [UIColor colorWithWhite:1 alpha:0.7];
+        _previewQualityBtn.selected = NO;
+        _previewQualityLabel.textColor = [UIColor colorWithWhite:1 alpha:0.7];
     }
 }
 
@@ -223,14 +230,43 @@
 
 #pragma mark - 选择封面
 - (void)nextButtonClick {
-    
     [self pausePlayer];
-    TZImagePickerController *imagePickerVc      = (TZImagePickerController *)self.navigationController;
-    TZXDVideoGetCoverController *videoCropVc    = [[TZXDVideoGetCoverController alloc] init];
-    videoCropVc.imagePickerVc                   = imagePickerVc;
-    videoCropVc.model                           = self.model;
-    videoCropVc.previewQuality                  = self.previewQuality;
-    [self.navigationController pushViewController:videoCropVc animated:YES];
+    
+    TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (imagePickerVc.autoDismiss) {
+            [imagePickerVc dismissViewControllerAnimated:YES completion:^{
+                [self callDelegateMethod];
+            }];
+        } else {
+            [self callDelegateMethod];
+        }
+    });
+//    x1v9.1封面获取移除
+//    TZImagePickerController *imagePickerVc      = (TZImagePickerController *)self.navigationController;
+//    TZXDVideoGetCoverController *videoCropVc    = [[TZXDVideoGetCoverController alloc] init];
+//    videoCropVc.imagePickerVc                   = imagePickerVc;
+//    videoCropVc.model                           = self.model;
+//    videoCropVc.previewQuality                  = self.previewQuality;
+//    [self.navigationController pushViewController:videoCropVc animated:YES];
+
+}
+
+/*
+ * 确定进行清晰度质量压缩【返回参数】
+ * @author selice
+ * @date 2025.02.13
+ */
+#pragma mark -
+- (void)callDelegateMethod {
+    
+    TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
+    if ([imagePickerVc.pickerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingAndQualityAndGetCoverVideo:sourceAssets:isHeightQuality:error:)]) {
+        [imagePickerVc.pickerDelegate imagePickerController:imagePickerVc didFinishPickingAndQualityAndGetCoverVideo:_cover sourceAssets:_model.asset isHeightQuality:self.previewQuality error:nil];
+    }
+    if (imagePickerVc.didFinishPickingAndQualityAndGetCoverVideoHandle) {
+        imagePickerVc.didFinishPickingAndQualityAndGetCoverVideoHandle(_cover,_model.asset,self.previewQuality,nil);
+    }
 }
 
 #pragma mark - Notification Method
@@ -272,6 +308,5 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
 }
-
 
 @end

@@ -152,6 +152,8 @@
 /// 默认为YES，如果设置为NO, 选择器将不会自己dismiss
 @property(nonatomic, assign) BOOL autoDismiss;
 
+
+
 /// Default is NO, if set YES, in the delegate method the photos and infos will be nil, only assets hava value.
 /// 默认为NO，如果设置为YES，代理方法里photos和infos会是nil，只返回assets
 @property (assign, nonatomic) BOOL onlyReturnAsset;
@@ -237,6 +239,7 @@
 @property (nonatomic, assign) BOOL isSelectOriginalPhoto;
 @property (assign, nonatomic) BOOL needShowStatusBar;
 
+
 #pragma mark -
 @property (nonatomic, copy) NSString *takePictureImageName __attribute__((deprecated("Use -takePictureImage.")));
 @property (nonatomic, copy) NSString *photoSelImageName __attribute__((deprecated("Use -photoSelImage.")));
@@ -279,7 +282,8 @@
 
 #pragma mark -
 - (void)cancelButtonClick;
-
+///手动关闭页面
+- (void)tz_handledismissViewControllerAnimated: (BOOL)flag completion: (void (^)(void))completion;
 // For method annotations, see the corresponding method in TZImagePickerControllerDelegate / 方法注释见TZImagePickerControllerDelegate中对应方法
 @property (nonatomic, copy) void (^didFinishPickingPhotosHandle)(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto);
 @property (nonatomic, copy) void (^didFinishPickingPhotosWithInfosHandle)(NSArray<UIImage *> *photos,NSArray *assets,BOOL isSelectOriginalPhoto,NSArray<NSDictionary *> *infos);
