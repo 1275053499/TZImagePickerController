@@ -115,6 +115,11 @@
     _previewGetCoverBtn.backgroundColor = [UIColor colorWithRed:42/255.0 green:215/255.0 blue:255/255.0 alpha:1];
     _previewGetCoverBtn.layer.cornerRadius = 12;
     _previewGetCoverBtn.clipsToBounds = YES;
+    // 设置按钮的内容从右到左排列
+    _previewGetCoverBtn.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+    // 调整图片和文字的位置
+    _previewGetCoverBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 1, 0, -1); // 图片向右偏移
+    _previewGetCoverBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -1, 0, 1); // 文字向左偏移
     _previewGetCoverBtn.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [_previewBarView addSubview:_previewGetCoverBtn];
 

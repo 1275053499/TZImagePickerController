@@ -283,7 +283,7 @@
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:self.maxCountTF.text.integerValue columnNumber:self.columnNumberTF.text.integerValue delegate:nil pushPhotoPickerVc:YES];
     imagePickerVc.customVideoPreview = YES;
     imagePickerVc.customShowAlbumCategory = YES;
-    imagePickerVc.autoDismiss = NO;
+    
 #pragma mark - 五类个性化设置，这些参数都可以不传，此时会走默认设置
     imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
     
@@ -427,7 +427,7 @@
     // You can get the photos by block, the same as by delegate.
     // 你可以通过block或者代理，来得到用户选择的照片.
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        [self.tzimagePickerVc tz_handleToDis];
+       
     }];
     
     imagePickerVc.modalPresentationStyle = UIModalPresentationFullScreen;

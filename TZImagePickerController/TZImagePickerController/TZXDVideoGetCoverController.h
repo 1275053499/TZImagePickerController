@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///马赛克模糊图
 @property (strong, nonatomic) UIView * coverView;
 
-
 @end
 
 NS_ASSUME_NONNULL_END
